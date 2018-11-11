@@ -218,28 +218,181 @@ __其他项目__
 
 ### 10. 数组
 
-- 数组的键和值
-- 索引数组, 键是数字 从零开始 自动增长
-- 关联数组, 键是字符串
-- 创建数组, `array()`, `[]`
-- 查看数组内容, `print_r()`
-- 元素操作
-    + 添加数组元素
-    + 访问数组元素
-    + 修改数组元素
-    + 删除数组元素
-    + 遍历数组元素, `foreach(){}`
-- 二维数组
-    + 二维数组的遍历
-    + 嵌入HTML
-        <?=...;?>
-        <?php echo ...;?>
+#### 数组的定义
 
-### 11. 函数
+```php
+$numbers = array(1,2,3,4,5,6,7,8,9);
+$numbers = [1,2,3,4,5,6,7,8,9];
+```
 
-- 函数的定义
-- 函数的调用
-- 函数的参数
-- 参数的默认值
-- 函数的返回值
-- 变量的作用域
+#### 查看数组内容(调试)
+
+- print_r()
+- var_dump()
+- var_export()
+
+#### 模板语法
+
+##### 输出(打印):
+
+`<?=x?>` 等价于 `<?php echo x;?>`
+
+##### 遍历(循环):
+
+```php
+    <?php foreach(数组 as 键 => 值):?>
+        <?=键?>: <?=值?>
+    <?php endforeach?>
+```
+
+等价于
+
+```php
+    <?php foreach(数组 as 键 => 值){?>
+        <?=键?>: <?=值?>
+    <?php }?>
+```
+
+#### 关联数组
+
+```php
+$user = ['name' => 'andy', 'age' => 21,'gender' => 'man',  'city' => '西安'];
+```
+
+#### 二维数组
+
+```php
+$users = [
+    ['name' => 'andy', 'age' => 21,'gender' => 'man',  'city' => '西安'],
+    ['name' => 'kiily','age' => 24,'gender' => 'woman','city' => '上海'],
+    ['name' => 'soga', 'age' => 22,'gender' => 'man',  'city' => '上海'],
+];
+
+<table border="1">
+    <tr><th>姓名</th><th>城市</th><th>年龄</th><th>性别</th></tr>
+    <?php foreach($users as $key => $user):?>
+    <tr>
+        <td><?=$user['name'];?></td>
+        <td><?=$user['city'];?></td>
+        <td><?=$user['age'];?></td>
+        <td><?=$user['gender'];?></td>
+    </tr>
+    <?php endforeach;?>
+</table>
+```
+
+#### 元素操作
+
+访问数组元素 修改数组元素 添加数组元素 删除数组元素
+
+#### 数组相关函数
+
+- explode() 把一个字符串转换成数组
+- implode() 把数组转换成字符串
+
+栈方法
+
+- array_pop(), array_push()
+
+队列方法
+
+- array_pop(), array_unshift()
+- array_shift(), array_push()
+
+获取数组长度(元素个数): count()
+
+### 11. 自定义函数
+
+#### 函数的定义
+
+```php
+function 函数名(参数列表) {
+    函数体
+    return 返回值
+}
+```
+
+#### 函数的调用
+
+```php
+函数名(实际参数);
+```
+
+#### 函数的参数
+
+#### 函数的返回值
+
+#### 变量的作用域
+
+## 三、数据库基础
+
+### 1. 关系型数据库的基本概念
+
+__数据库__  
+存放数据的仓库
+
+__表__  
+二维关系，用来保存具有相同格式的数据，一个数据库可以有多张表
+
+__行(记录)__  
+行用来记录数据
+
+__列(字段)__  
+列用来规定数据格式，也可称为数据属性
+
+__主键__  
+是表中的一个或多个字段，它的值用于唯一地标识表中的某一条记录
+
+__SQL__  
+结构化查询语言，用来管理数据的语言
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 2. MySql数据库
+> MySQL是由瑞典的 MySQL AB公司开发的，目前是Oracle（甲骨文）公司的一个关系型数据库产品（2008年MySQL AB被Sun公司收购、2009年Sun公司又被Oracle收购 ），并且开源，免费。 
+世界上最流行的开源数据库系统，功能足够强大，足以应付web应用。
+
+#### 创建数据库
+
+```sql
+create database test charset utf8 collate utf8_general_ci;
+```
+
+或者
+
+```sql
+create database test character set utf8 collate utf8_general_ci;
+```
+
+显示数据库
+
+```sql
+SHOW DATABASES;
+```
+
+删除数据库
+
+```sql
+DROP DATABASE mytest;
+```
+
+切换数据库
+
+```sql
+use mytest;
+```
+
+
+
+
+
