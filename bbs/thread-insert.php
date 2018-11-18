@@ -4,12 +4,12 @@ include 'functions.php';
 
 // 接收数据
 $post = [
-    'subject' => $_POST['subject'],
+    'subject' => '',
     'content' => $_POST['content'],
     'publish_at' => time(),
-    'publish_by' => 'admin',
+    'publish_by' => 'user',
     'replies' => '0',
-    'section_id' => $_POST['section_id'],
+    'post_id' => $_POST['post_id'],
 ];
 // 调试
 //print_r($post);
@@ -18,13 +18,13 @@ $post = [
 // 保存到数据库
 $db = getDbLink();
 
-$sql = "INSERT INTO `post` (`id`, `subject`, `content`, `publish_at`, `publish_by`, `replies`, `section_id`) VALUES (null, '".
+$sql = "INSERT INTO `thread` (`id`, `subject`, `content`, `publish_at`, `publish_by`, `replies`, `post_id`) VALUES (null, '".
     $post['subject']."', '".
     $post['content']."',".
     $post['publish_at'].",'".
     $post['publish_by']."',".
     $post['replies'].", ".
-    $post['section_id'].")";
+    $post['post_id'].")";
 
 mysqli_query($db, $sql);
 
@@ -36,6 +36,5 @@ if(mysqli_errno($db) != 0){
 // 数据插入成功
 
 // 跳转页面
-header('Location: section.php?sid=' . $post['section_id'] );
+header('Location: post.php?id=' . $post['post_id']);
 exit;
-

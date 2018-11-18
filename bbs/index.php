@@ -1,21 +1,11 @@
 <?php
 include 'functions.php';
+include 'config.php';
 
-$sections = [
-    '1' => ['name' => 'Backend', 'image' => 'static/attaches/section_1.jpg'],
-    '2' => ['name' => 'Frontend', 'image' => 'static/attaches/section_2.jpg'],
-    '3' => ['name' => 'Database', 'image' => 'static/attaches/section_3.jpg'],
-    '4' => ['name' => 'UI', 'image' => 'static/attaches/section_4.jpg'],
-];
+$current = 'Home';
 
 // 获取数据
-// 1. 连接数据库 host,username,password,dbname
-$db = @mysqli_connect('localhost', 'root','root','bbs');
-
-if(mysqli_connect_errno() != 0){
-    // 处理错误
-    die(mysqli_connect_error());
-}
+$db = getDbLink();
 
 // 查询版块数据
 $data = [];
@@ -34,8 +24,14 @@ if (mysqli_errno($db) != 0) {
 $lasted = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 // 查询最热8条
-$sql = "SELECT * FROM `post` ORDER BY `views` DESC LIMIT 8";
+$sql = "SELECT `post`.*, COUNT(`post`.`id`) AS reply_count 
+        FROM `post` 
+        RIGHT JOIN `thread` ON `post`.`id` = `thread`.`post_id` 
+        GROUP BY `post`.`id` 
+        ORDER BY reply_count 
+        DESC LIMIT 8";
 $result = mysqli_query($db, $sql);
+
 if (mysqli_errno($db) != 0) {
     // 处理错误
     die(mysqli_error($db));
