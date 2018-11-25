@@ -55,10 +55,10 @@
                         <div class="search-offer icon hidden-md hidden-lg" id="search-offer" data-target="#search">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </div>
-                        <form action="search.html" method="get">
+                        <form action="search.php" method="get">
                             <div class="input-group">
                                 <label class="sr-only" for="keyword">搜索：</label>
-                                <input type="text" class="form-control" id="keyword" placeholder="关键词">
+                                <input type="text" class="form-control" id="keyword" placeholder="关键词" name="k">
                                 <span class="input-group-btn">
                                             <button class="btn btn-info" type="submit">搜索</button>
                                         </span>
@@ -70,9 +70,15 @@
                     <div class="mainnav" id="mainnav">
                         <div class="usermenu">
                             <div class="links">
-                                <a href="signin.html">登录</a>
-                                <span>/</span>
-                                <a href="signup.html">注册</a>
+                                <?php if(isLogin()) :?>
+                                    Hello, <?=$_SESSION['user']['username']?>
+                                    <span>/</span>
+                                    <a href="logout.php">登出</a>
+                                <?php else:?>
+                                    <a href="signin.php">登录</a>
+                                    <span>/</span>
+                                    <a href="signup.php">注册</a>
+                                <?php endif;?>
                             </div>
                             <div class="mainnav-offer icon hidden-md hidden-lg" id="mainnav-offer" data-target="#mainnav">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

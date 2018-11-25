@@ -30,12 +30,32 @@
     var editor;
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
-            allowFileManager : true,
+            allowFileManager : false,
             height: 300,
+            uploadJson : 'upload_json.php',
         });
     });
 </script>
 <?php endif?>
+
+<script>
+    $(function() {
+        $form = $('#post-form');
+        $form.on('click', 'button', function () {
+            if(typeof editor != 'undefined') {
+                editor.sync('textarea[name="content"]');
+            }
+            $.post($form.attr('action'), $form.serialize(), function (res) {
+                console.log(res);
+                alert(res.message);
+                if(!res.status) {
+                    location.href = res.data.goUrl;
+                }
+            }, 'json');
+            return false;
+        });
+    });
+</script>
 
 </body>
 </html>

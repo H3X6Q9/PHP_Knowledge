@@ -101,3 +101,25 @@ function getReplyCount($db, $id) {
     $row = mysqli_fetch_assoc($result);
     return $row['reply_count'];
 }
+
+function password($pswd, $username) {
+    return md5($pswd. $username);
+}
+
+function isLogin() {
+    return isset($_SESSION['user']);
+}
+
+function checkcode() {
+    $authcode = $_POST['authcode'];
+    return strtoupper($authcode) == $_SESSION['authcode'];
+}
+
+function ajaxReturn($status, $message = '', $data = []) {
+    echo json_encode([
+        'status' => $status,
+        'message' => $message,
+        'data' => $data,
+    ]);
+    exit;
+}

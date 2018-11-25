@@ -1,6 +1,11 @@
 <?php
+session_start();
 include 'config.php';
 include 'functions.php';
+
+if(!checkcode()) {
+    ajaxReturn(1, '验证码错误, 请重新输入');
+}
 
 // 接收数据
 $post = [
@@ -34,7 +39,8 @@ if(mysqli_errno($db) != 0){
 }
 
 // 数据插入成功
+ajaxReturn(0, '数据已保存', ['goUrl' => 'post.php?id=' . $post['post_id']]);
 
 // 跳转页面
-header('Location: post.php?id=' . $post['post_id']);
-exit;
+//header('Location: post.php?id=' . $post['post_id']);
+//exit;
